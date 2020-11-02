@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>jquery lab</title>
+    <link href="styles/normalize.css" type="text/css" rel="stylesheet">
+    <link href="styles/styles.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script>
+        $(document).ready(function() {
+            console.log("I am loaded");
+            //CLICK
+            $("#button").click(function(event) {
+                window.alert("The button has been clicked!");
+
+            });
+
+            //BIND
+            $("#button1").bind('click', function(event) {
+                window.alert("The button has been clicked using bind!");
+
+            });
+            //ON
+            $("#button2").on('click', function(event) {
+                window.alert("The button has been clicked using on!");
+
+            });
+
+            $("#button3, #button4").on('click', function(event) {
+                window.alert("The button has been clicked using on for two buttons!");
+            });
+
+            $('div').css('height', '400px');
+            $('div').css('width', '400px');
+            $('span').css('height', '400px');
+            $('span').css('width', '400px');
+
+            //$('body').on('mouseenter mouseleave', 'div', function() {
+            //    window.alert("The div was clicked, mouse entered or mouse left");
+            //});
+
+            $("div").on({
+                mouseenter: function() {
+                    window.alert("entered the div");
+                },
+                mouseleave: function() {
+                    window.alert("left the div");
+                },
+                click: function() {
+                    window.alert("clicked the div");
+                }
+
+
+
+
+            });
+
+            $("span").on({
+                mouseenter: function() {
+                    window.alert("entered the span");
+                },
+                mouseleave: function() {
+                    window.alert("left the span");
+                },
+                click: function() {
+                    window.alert("clicked the span");
+                }
+
+
+
+
+            });
+
+            $("a").click(function(event) {
+                var element = $(this);
+                if (element.attr("href")) {
+                    event.preventDefault()
+                    $('a').css('color', 'red');
+                    window.alert(event.target.nodeName);
+                }
+
+
+            });
+            //resize window text
+            $(window).resize(function() {
+                $("#resize").text($(window).width());
+            });
+            //keypress
+            var i = 0;
+            $("input").keypress(function() {
+                $("span").text(i += 1);
+            });
+
+
+            $("input").focus(function() {
+                $('#input').css("color", "light-gray");
+            });
+
+            $("input").focusout(function() {
+                $("#input").css("color", "white");
+            });
+
+
+            $('#name').focus();
+            $('#email').focus();
+
+            $('info_form').submit(function(event) {
+                var isValid = true;
+
+                //Validate
+                var emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                var email = $('#email').val().trim();
+                if (email == '') {
+                    $('#email').next().text('This field is required!');
+                    isValid = false;
+                } else if (!emailPattern.test(email)) {
+                    $('#email').next().text('Must be valid email address!');
+                    isValid = false;
+                } else {
+                    $('#email').next().text('');
+                }
+
+                $('email').val(email);
+
+                if (isValid == false) {
+                    event.preventDefault();
+                }
+
+            });
+
+
+
+
+
+        });
+    </script>
+</head>
+
+
+<button id="button">Button</button>
+<button id="button1">Button1</button>
+<button id="button2">Button2</button>
+<button id="button3">Button3</button>
+<button id="button4">Button4</button>
+
+<div> <input type="text"></div>
+<span>Here I Span</span>
+<a href="modulemedia.com">LINK</a>
+<div id="resize"></div>
+
+<form id="info_form" name="info_form">
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" for="name">
+    <span>*</span><br>
+
+    <label for="email">Email Address:</label>
+    <input type="text" id="email" for="email">
+    <span>*</span><br>
+
+    <label>&nbsp;</label>
+    <input type="submit" id="form_submit" name="submit" value="Submit">
+</form>
+
+
+
+
+
+
+</body>
+
+
+</html>
